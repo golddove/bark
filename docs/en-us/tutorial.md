@@ -77,5 +77,38 @@ List of supported parameters, specific effects can be previewed in the APP.
 | isArchive | Pass 1 to save the push, pass other values to not save the push, if not passed, it will be decided by the APP settings whether to save. |
 | url | URL to jump to when the push is clicked, supports URL Scheme and Universal Link |
 | action | Pass "none" to prevent a popup when the push is clicked |
+| actions | Custom action buttons displayed with the notification. Pass a JSON array of action objects. Each action can have: `title` (required), `id` (optional identifier), `url` (optional URL to open), and options like `destructive`, `authenticationRequired`, `foreground` (all boolean). Maximum 4 custom actions. Example: `[{"title":"Open","url":"https://example.com"},{"title":"Delete","destructive":true}]` |
 | id | When using the same ID value, it will update the corresponding push notification content<br>Requires Bark v1.5.2, bark-server v2.2.5 or above |
 | delete | Pass "1" to delete the notification from the system notification center and APP history, must be used with the id parameter<br>Requires "Background App Refresh" to be enabled in settings, otherwise it will not work. |
+
+## Actionable Notifications Example
+
+You can add custom action buttons to your notifications using the `actions` parameter. Here's an example:
+
+```sh
+curl -X "POST" "https://api.day.app/your_key" \
+     -H 'Content-Type: application/json; charset=utf-8' \
+     -d '{
+  "title": "System Alert",
+  "body": "Server backup completed successfully",
+  "actions": "[{\"title\":\"View Logs\",\"url\":\"https://example.com/logs\"},{\"title\":\"Acknowledge\",\"id\":\"ack\"}]"
+}'
+```
+
+### Action Parameters
+
+Each action in the array can have the following properties:
+
+- **title** (required): The text displayed on the action button
+- **id** (optional): A unique identifier for the action (auto-generated if not provided)
+- **url** (optional): A URL to open when the action is tapped (supports URL schemes and Universal Links)
+- **destructive** (optional, boolean): Display the action in red to indicate it's destructive
+- **authenticationRequired** (optional, boolean): Require the device to be unlocked before the action is performed
+- **foreground** (optional, boolean): Launch the app in the foreground when the action is tapped
+
+### Notes
+
+- You can define up to 4 custom actions per notification
+- If custom actions are defined, the default "Copy" and "Mute" actions may still appear if there's room
+- Actions with URLs will open the URL when tapped
+- Actions without URLs will just dismiss the notification
