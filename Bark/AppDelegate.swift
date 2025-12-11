@@ -97,9 +97,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         guard response.actionIdentifier != UNNotificationDismissActionIdentifier else {
             // clear 推送时，不要弹出提示框
+            completionHandler()
             return
         }
-        notificatonHandler(userInfo: response.notification.request.content.userInfo)
+        
+        // Handle built-in actions
+        switch response.actionIdentifier {
+        case "copy":
+            handleCopyAction(response: response)
+            completionHandler()
+            return
+        case "mute":
+            handleMuteAction(response: response)
+            completionHandler()
+            return
+        case UNNotificationDefaultActionIdentifier:
+            // Default tap on notification
+            notificatonHandler(userInfo: response.notification.request.content.userInfo)
+            completionHandler()
+            return
+        default:
+            // Handle custom actions
+            handleCustomAction(response: response)
+            completionHandler()
+            return
+        }
     }
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         guard let delete = userInfo["delete"] as? String, delete == "1", let id = userInfo["id"] as? String else {
@@ -236,6 +258,70 @@ extension AppDelegate {
             }
         } else {
             viewController?.present(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    // MARK: - Action Handlers
+    
+    func handleCopyAction(response: UNNotificationResponse) {
+        let userInfo = response.notification.request.content.userInfo
+        
+        if let copy = userInfo["copy"] as? String {
+            UIPasteboard.general.string = copy
+        } else {
+            var content = ""
+            if !response.notification.request.content.title.isEmpty {
+                content += "\(response.notification.request.content.title)\n"
+            }
+            if !response.notification.request.content.subtitle.isEmpty {
+                content += "\(response.notification.request.content.subtitle)\n"
+            }
+            if !response.notification.request.content.body.isEmpty {
+                content += "\(response.notification.request.content.body)\n"
+            }
+            if let url = userInfo["url"] as? String, !url.isEmpty {
+                content += "\(url)\n"
+            }
+            content = content.trimmingCharacters(in: .whitespacesAndNewlines)
+            UIPasteboard.general.string = content
+        }
+        
+        HUDSuccess("Copy".localized)
+    }
+    
+    func handleMuteAction(response: UNNotificationResponse) {
+        let groupName = response.notification.request.content.threadIdentifier
+        // 静音一小时
+        GroupMuteSettingManager().settings[groupName] = Date() + 60 * 60
+        
+        let displayName = groupName.isEmpty ? "default".localized : groupName
+        HUDSuccess(String(format: "groupMuted".localized, displayName))
+    }
+    
+    func handleCustomAction(response: UNNotificationResponse) {
+        let userInfo = response.notification.request.content.userInfo
+        let actionId = response.actionIdentifier
+        
+        // Parse actions from userInfo to find the matching action
+        guard let actionsJson = userInfo["actions"] as? String,
+              let actionsData = actionsJson.data(using: .utf8),
+              let actionsArray = try? JSONSerialization.jsonObject(with: actionsData) as? [[String: Any]] else {
+            return
+        }
+        
+        // Find the action that was triggered
+        var actionUrl: String?
+        for (index, actionDict) in actionsArray.enumerated() {
+            let id = (actionDict["id"] as? String) ?? "action_\(index)"
+            if id == actionId {
+                actionUrl = actionDict["url"] as? String
+                break
+            }
+        }
+        
+        // If action has a URL, open it
+        if let urlString = actionUrl, let url = try? urlString.asURL() {
+            Client.shared.openUrl(url: url)
         }
     }
 }
