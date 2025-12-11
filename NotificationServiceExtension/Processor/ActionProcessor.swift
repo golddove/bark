@@ -96,6 +96,8 @@ class ActionProcessor: NotificationContentProcessor {
         await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
             UNUserNotificationCenter.current().getNotificationCategories { existingCategories in
                 var categories = existingCategories
+                // Remove any existing category with the same identifier to ensure replacement
+                categories.removeAll { $0.identifier == categoryId }
                 categories.insert(category)
                 UNUserNotificationCenter.current().setNotificationCategories(categories)
                 continuation.resume()
