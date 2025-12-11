@@ -95,9 +95,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        defer { completionHandler() }
+        
         guard response.actionIdentifier != UNNotificationDismissActionIdentifier else {
             // clear 推送时，不要弹出提示框
-            completionHandler()
             return
         }
         
@@ -105,22 +106,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         switch response.actionIdentifier {
         case "copy":
             handleCopyAction(response: response)
-            completionHandler()
-            return
         case "mute":
             handleMuteAction(response: response)
-            completionHandler()
-            return
         case UNNotificationDefaultActionIdentifier:
             // Default tap on notification
             notificatonHandler(userInfo: response.notification.request.content.userInfo)
-            completionHandler()
-            return
         default:
             // Handle custom actions
             handleCustomAction(response: response)
-            completionHandler()
-            return
         }
     }
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {

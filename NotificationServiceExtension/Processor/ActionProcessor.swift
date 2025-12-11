@@ -92,7 +92,7 @@ class ActionProcessor: NotificationContentProcessor {
             options: .customDismissAction
         )
         
-        // Register the category synchronously
+        // Await category registration completion
         await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
             UNUserNotificationCenter.current().getNotificationCategories { existingCategories in
                 var categories = existingCategories
