@@ -77,7 +77,7 @@ curl -X "POST" "https://api.day.app/push" \
 | isArchive | 传 1 保存推送，传其他的不保存推送，不传按APP内设置来决定是否保存。 |
 | url | 点击推送时，跳转的URL ，支持URL Scheme 和 Universal Link |
 | action | 传 "none" 时，点击推送不会弹窗 |
-| actions | 自定义通知操作按钮。传入 JSON 数组，每个操作包含：`title`（必需），`id`（可选标识符），`url`（可选链接），以及选项 `destructive`、`authenticationRequired`、`foreground`（均为布尔值）。最多支持 4 个自定义操作。示例：`[{"title":"打开","url":"https://example.com"},{"title":"删除","destructive":true}]` |
+| actions | 自定义操作按钮（JSON 数组）。每个操作：`title`（必需）、`id`、`url` 及选项。最多 4 个。详见下方示例。 |
 | id | 使用相同的ID值时，将更新对应推送的通知内容<br>需 Bark v1.5.2, bark-server v2.2.5 以上，Json传参需使用字符串类型 |
 | delete | 传 "1" 时，将从系统通知中心和APP内历史记录中删除通知，需搭配 id 参数使用<br>需在设置里开启”后台App刷新“，否则无效。|
 

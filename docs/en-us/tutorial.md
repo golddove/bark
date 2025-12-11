@@ -77,7 +77,7 @@ List of supported parameters, specific effects can be previewed in the APP.
 | isArchive | Pass 1 to save the push, pass other values to not save the push, if not passed, it will be decided by the APP settings whether to save. |
 | url | URL to jump to when the push is clicked, supports URL Scheme and Universal Link |
 | action | Pass "none" to prevent a popup when the push is clicked |
-| actions | Custom action buttons displayed with the notification. Pass a JSON array of action objects. Each action can have: `title` (required), `id` (optional identifier), `url` (optional URL to open), and options like `destructive`, `authenticationRequired`, `foreground` (all boolean). Maximum 4 custom actions. Example: `[{"title":"Open","url":"https://example.com"},{"title":"Delete","destructive":true}]` |
+| actions | Custom action buttons (JSON array). Each action: `title` (required), `id`, `url`, and options. Max 4 actions. See examples below. |
 | id | When using the same ID value, it will update the corresponding push notification content<br>Requires Bark v1.5.2, bark-server v2.2.5 or above |
 | delete | Pass "1" to delete the notification from the system notification center and APP history, must be used with the id parameter<br>Requires "Background App Refresh" to be enabled in settings, otherwise it will not work. |
 
