@@ -68,7 +68,7 @@ class ActionProcessor: NotificationContentProcessor {
         if actions.count < 4 {
             actions.append(UNNotificationAction(
                 identifier: "copy",
-                title: "Copy",
+                title: "Copy2".localized,
                 options: .foreground
             ))
         }
@@ -76,7 +76,7 @@ class ActionProcessor: NotificationContentProcessor {
         if #available(iOSApplicationExtension 15.0, *), actions.count < 4 {
             actions.append(UNNotificationAction(
                 identifier: "mute",
-                title: "Mute 1 Hour",
+                title: "muteGroup1Hour".localized,
                 options: .foreground
             ))
         }
