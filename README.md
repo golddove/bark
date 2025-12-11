@@ -1,7 +1,7 @@
 English | **[中文](README.zh.md)**
 ## Bark
 Bark is a push notification tool app. It's free, simple, and secure, leveraging APNs without draining device battery.<br/>
-Bark supports many advanced features of iOS notifications, including notification grouping, custom push icons, sounds, time-sensitive notifications, critical alerts, and more.<br/> 
+Bark supports many advanced features of iOS notifications, including notification grouping, custom push icons, sounds, time-sensitive notifications, critical alerts, actionable notifications, and more.<br/> 
 Additionally, Bark supports self-hosted servers and offers encrypted push notifications to ensure privacy and security. <br/>
 
 ## Download

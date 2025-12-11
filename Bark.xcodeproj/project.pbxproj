@@ -122,6 +122,7 @@
 		069332232E6A8E3100F9387F /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0603706A20E20A7C00F4CA05 /* String+Extension.swift */; };
 		0699473D2D223094008D5E40 /* CustomTapTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0699473C2D223094008D5E40 /* CustomTapTextView.swift */; };
 		069C6CA42ED03C72007244BB /* MarkdownProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069C6CA32ED03C72007244BB /* MarkdownProcessor.swift */; };
+		94CD63F7BB63479BB7F8C767 /* ActionProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969687C7D4F2438D80701985 /* ActionProcessor.swift */; };
 		069C6CA52ED03E10007244BB /* MarkdownParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C777CF2ECEFF210032A044 /* MarkdownParser.swift */; };
 		069C6CA72ED03E27007244BB /* Markdown in Frameworks */ = {isa = PBXBuildFile; productRef = 069C6CA62ED03E27007244BB /* Markdown */; };
 		069C6CA92ED03F07007244BB /* BKColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06840DBA272298FB001B3193 /* BKColor.swift */; };
@@ -371,6 +372,7 @@
 		068F66B2247BD84C00DAD25A /* MessageListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageListViewController.swift; sourceTree = "<group>"; };
 		0699473C2D223094008D5E40 /* CustomTapTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTapTextView.swift; sourceTree = "<group>"; };
 		069C6CA32ED03C72007244BB /* MarkdownProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownProcessor.swift; sourceTree = "<group>"; };
+		969687C7D4F2438D80701985 /* ActionProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionProcessor.swift; sourceTree = "<group>"; };
 		06B1158C247BA6D5006D91FB /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		06B1158E247BB1FB006D91FB /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		06B11590247BBC15006D91FB /* NotificationServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NotificationServiceExtension.entitlements; sourceTree = "<group>"; };
@@ -731,6 +733,7 @@
 				06E944792C0704E500AC86AB /* ImageDownloader.swift */,
 				06BCAE5A2CDB25120092867A /* MuteProcessor.swift */,
 				069C6CA32ED03C72007244BB /* MarkdownProcessor.swift */,
+				969687C7D4F2438D80701985 /* ActionProcessor.swift */,
 			);
 			path = Processor;
 			sourceTree = "<group>";
@@ -1358,6 +1361,7 @@
 				06CF784C21C7A51200A052D7 /* NotificationService.swift in Sources */,
 				06FB04052C53575400F3A213 /* SharedDefines.swift in Sources */,
 				069C6CA42ED03C72007244BB /* MarkdownProcessor.swift in Sources */,
+				94CD63F7BB63479BB7F8C767 /* ActionProcessor.swift in Sources */,
 				067AFB1D2E5D8BED00AE78E7 /* UNNotificationContent+Extension.swift in Sources */,
 				0653677629B719BC0038BDB8 /* CryptoSettingManager.swift in Sources */,
 				06E9446F2C06FF1E00AC86AB /* BadgeProcessor.swift in Sources */,

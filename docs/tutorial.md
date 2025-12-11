@@ -77,6 +77,7 @@ curl -X "POST" "https://api.day.app/push" \
 | isArchive | 传 1 保存推送，传其他的不保存推送，不传按APP内设置来决定是否保存。 |
 | url | 点击推送时，跳转的URL ，支持URL Scheme 和 Universal Link |
 | action | 传 "none" 时，点击推送不会弹窗 |
+| actions | 自定义操作按钮（JSON 数组）。每个操作：`title`（必需）、`id`、`url` 及选项。最多 4 个。详见下方示例。 |
 | id | 使用相同的ID值时，将更新对应推送的通知内容<br>需 Bark v1.5.2, bark-server v2.2.5 以上，Json传参需使用字符串类型 |
 | delete | 传 "1" 时，将从系统通知中心和APP内历史记录中删除通知，需搭配 id 参数使用<br>需在设置里开启”后台App刷新“，否则无效。|
 
@@ -89,3 +90,34 @@ curl -X "POST" "https://api.day.app/push" \
 
 ## 快捷指令
 Bark 支持使用快捷指令直接发送推送
+## 可操作通知示例
+
+您可以使用 `actions` 参数为通知添加自定义操作按钮。示例：
+
+```sh
+curl -X "POST" "https://api.day.app/your_key" \
+     -H 'Content-Type: application/json; charset=utf-8' \
+     -d '{
+  "title": "系统提醒",
+  "body": "服务器备份已成功完成",
+  "actions": "[{\"title\":\"查看日志\",\"url\":\"https://example.com/logs\"},{\"title\":\"确认\",\"id\":\"ack\"}]"
+}'
+```
+
+### 操作参数
+
+数组中的每个操作可以包含以下属性：
+
+- **title**（必需）：操作按钮上显示的文本
+- **id**（可选）：操作的唯一标识符（如未提供则自动生成）
+- **url**（可选）：点击操作时打开的 URL（支持 URL Scheme 和 Universal Link）
+- **destructive**（可选，布尔值）：以红色显示操作，表示这是破坏性操作
+- **authenticationRequired**（可选，布尔值）：执行操作前需要解锁设备
+- **foreground**（可选，布尔值）：点击操作时在前台启动应用
+
+### 注意事项
+
+- 每个通知最多可定义 4 个自定义操作
+- 如果定义了自定义操作，默认的"复制"和"静音"操作可能仍会在有空间时显示
+- 带有 URL 的操作在点击时会打开 URL
+- 不带 URL 的操作只会关闭通知
