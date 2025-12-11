@@ -92,11 +92,14 @@ class ActionProcessor: NotificationContentProcessor {
             options: .customDismissAction
         )
         
-        // Register the category
-        UNUserNotificationCenter.current().getNotificationCategories { existingCategories in
-            var categories = existingCategories
-            categories.insert(category)
-            UNUserNotificationCenter.current().setNotificationCategories(categories)
+        // Register the category synchronously
+        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+            UNUserNotificationCenter.current().getNotificationCategories { existingCategories in
+                var categories = existingCategories
+                categories.insert(category)
+                UNUserNotificationCenter.current().setNotificationCategories(categories)
+                continuation.resume()
+            }
         }
         
         // Set the category identifier on the notification
